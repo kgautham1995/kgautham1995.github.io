@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Kisher Sagar Gautam — Data Engineer & Analyst. PySpark, SQL, Python, Hadoop, Azure AI Engineer." />
+<title>Kisher Sagar Gautam · Data Engineer & Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #09090f; --surface: #13131c; --surface2: #1c1c28;
+    --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.14);
+    --accent: #5b8cff; --accent2: #a78bfa; --accent3: #34d399;
+    --text: #e8e8f0; --muted: #8888a8; --dim: #55556a;
+    --font: 'Space Grotesk', sans-serif; --mono: 'DM Mono', monospace;
+    --radius: 12px; --glow: 0 0 40px rgba(91,140,255,0.12);
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 56px;
+    background: rgba(9,9,15,0.88); backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-size: 13px; font-family: var(--mono); color: var(--accent); letter-spacing: 0.04em; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta { font-size: 13px; padding: 7px 18px; border: 1px solid var(--accent); border-radius: 6px; color: var(--accent); text-decoration: none; font-family: var(--mono); transition: background 0.2s, color 0.2s; }
+  .nav-cta:hover { background: var(--accent); color: #09090f; }
+
+  #hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 2rem 4rem; position: relative; overflow: hidden; }
+  .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 30%, transparent 100%); pointer-events: none; }
+  .hero-glow { position: absolute; top: 20%; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; background: radial-gradient(ellipse, rgba(91,140,255,0.1) 0%, transparent 70%); pointer-events: none; }
+  .hero-content { position: relative; text-align: center; max-width: 720px; }
+  .hero-tag { display: inline-block; margin-bottom: 1.5rem; font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; color: var(--accent3); border: 1px solid rgba(52,211,153,0.3); padding: 4px 14px; border-radius: 100px; }
+  h1 { font-size: clamp(2.4rem, 6vw, 4rem); font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+  .hero-title-accent { color: var(--accent); }
+  .hero-sub { font-family: var(--mono); font-size: 13px; color: var(--muted); margin-bottom: 1.5rem; letter-spacing: 0.05em; }
+  .hero-desc { font-size: 16px; color: var(--muted); max-width: 580px; margin: 0 auto 2.5rem; line-height: 1.75; }
+  .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { padding: 11px 28px; background: var(--accent); color: #09090f; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; transition: opacity 0.2s, transform 0.15s; }
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+  .btn-outline { padding: 11px 28px; background: transparent; border: 1px solid var(--border2); color: var(--text); border-radius: 8px; text-decoration: none; font-size: 14px; transition: border-color 0.2s, background 0.2s; }
+  .btn-outline:hover { border-color: var(--accent); background: rgba(91,140,255,0.07); }
+  .hero-stats { display: flex; gap: 2.5rem; justify-content: center; margin-top: 3.5rem; padding-top: 3rem; border-top: 1px solid var(--border); flex-wrap: wrap; }
+  .stat { text-align: center; }
+  .stat-num { font-size: 1.8rem; font-weight: 600; color: var(--text); display: block; }
+  .stat-label { font-size: 12px; color: var(--muted); font-family: var(--mono); letter-spacing: 0.05em; }
+
+  section { max-width: 880px; margin: 0 auto; padding: 5rem 2rem; }
+  .section-eyebrow { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .section-title { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; margin-bottom: 0.75rem; line-height: 1.2; }
+  .section-desc { color: var(--muted); font-size: 15px; margin-bottom: 3rem; }
+  hr.divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  .summary-card { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 1.6rem 1.8rem; font-size: 15px; color: var(--muted); line-height: 1.8; opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .summary-card.visible { opacity: 1; transform: translateY(0); }
+
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 1px; background: linear-gradient(to bottom, transparent, rgba(91,140,255,0.25) 10%, rgba(91,140,255,0.25) 90%, transparent); }
+  .tl-item { position: relative; padding: 0 0 3rem 2.5rem; opacity: 0; transform: translateY(24px); transition: opacity 0.55s ease, transform 0.55s ease; }
+  .tl-item.visible { opacity: 1; transform: translateY(0); }
+  .tl-item::before { content: ''; position: absolute; left: -5px; top: 8px; width: 11px; height: 11px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); box-shadow: 0 0 10px rgba(91,140,255,0.5); }
+  .tl-item.edu-dot::before { background: var(--accent3); box-shadow: 0 0 10px rgba(52,211,153,0.4); }
+  .tl-item.prev-dot::before { background: var(--accent2); box-shadow: 0 0 10px rgba(167,139,250,0.4); }
+  .tl-date { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 0.4rem; }
+  .tl-item.edu-dot .tl-date { color: var(--accent3); }
+  .tl-item.prev-dot .tl-date { color: var(--accent2); }
+  .tl-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.4rem 1.5rem; transition: border-color 0.2s, box-shadow 0.2s; }
+  .tl-card:hover { border-color: var(--border2); box-shadow: var(--glow); }
+  .tl-role { font-size: 1rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .tl-org { font-size: 13px; color: var(--accent2); font-family: var(--mono); margin-bottom: 0.9rem; }
+  .tl-item.edu-dot .tl-org { color: var(--accent3); }
+  .tl-bullets { list-style: none; }
+  .tl-bullets li { font-size: 14px; color: var(--muted); padding: 3px 0 3px 1.1rem; position: relative; line-height: 1.65; }
+  .tl-bullets li::before { content: '→'; position: absolute; left: 0; color: var(--accent3); font-size: 12px; top: 5px; }
+  .tl-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
+  .tl-tag { font-family: var(--mono); font-size: 11px; padding: 3px 10px; border-radius: 100px; background: rgba(91,140,255,0.1); color: var(--accent); border: 1px solid rgba(91,140,255,0.2); }
+  .award-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 4px 12px; border-radius: 100px; background: rgba(167,139,250,0.1); color: var(--accent2); border: 1px solid rgba(167,139,250,0.2); margin: 4px 4px 0 0; }
+
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1rem; }
+  .skill-group { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.3rem; opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .skill-group.visible { opacity: 1; transform: translateY(0); }
+  .skill-group:hover { border-color: var(--border2); }
+  .skill-group-label { font-family: var(--mono); font-size: 11px; color: var(--accent3); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.8rem; }
+  .skill-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-chip { font-size: 12px; padding: 4px 11px; border-radius: 6px; background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
+
+  .certs-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1rem; }
+  .cert-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.3rem; display: flex; align-items: flex-start; gap: 1rem; opacity: 0; transform: translateY(18px); transition: opacity 0.45s ease, transform 0.45s ease; text-decoration: none; }
+  .cert-card.visible { opacity: 1; transform: translateY(0); }
+  .cert-card:hover { border-color: rgba(167,139,250,0.4); box-shadow: 0 0 20px rgba(167,139,250,0.08); }
+  .cert-badge { width: 38px; height: 38px; border-radius: 8px; flex-shrink: 0; background: rgba(167,139,250,0.12); border: 1px solid rgba(167,139,250,0.25); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 10px; color: var(--accent2); font-weight: 500; text-align: center; line-height: 1.3; }
+  .cert-name { font-size: 13px; font-weight: 500; color: var(--text); line-height: 1.4; }
+  .cert-issuer { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .cert-verify { font-size: 11px; color: var(--accent); margin-top: 4px; font-family: var(--mono); }
+
+  #contact { text-align: center; }
+  .contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
+  .contact-link { display: flex; align-items: center; gap: 8px; padding: 10px 22px; border: 1px solid var(--border2); border-radius: 8px; color: var(--muted); text-decoration: none; font-size: 14px; transition: all 0.2s; }
+  .contact-link:hover { border-color: var(--accent); color: var(--text); background: rgba(91,140,255,0.07); }
+  .contact-link svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+  footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-family: var(--mono); font-size: 12px; color: var(--dim); }
+
+  #progress-bar { position: fixed; top: 56px; left: 0; height: 2px; background: linear-gradient(to right, var(--accent), var(--accent2)); width: 0%; z-index: 200; transition: width 0.1s linear; }
+
+  @media (max-width: 640px) { .nav-links { display: none; } h1 { font-size: 2rem; } .hero-stats { gap: 1.5rem; } section { padding: 3rem 1.25rem; } }
+  @media (prefers-reduced-motion: reduce) { .tl-item, .skill-group, .cert-card, .summary-card { opacity: 1 !important; transform: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<nav>
+  <span class="nav-logo">kisher.dev</span>
+  <div class="nav-links">
+    <a href="#summary">Summary</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#certifications">Certs</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a class="nav-cta" href="Gautam_Resume.pdf" download>Download CV</a>
+</nav>
+
+<section id="hero" style="max-width:100%; padding-left:2rem; padding-right:2rem;">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <span class="hero-tag">Open to remote · Secunderabad, India · kgautham1995@gmail.com</span>
+    <h1>Kisher Sagar<br><span class="hero-title-accent">Gautam</span></h1>
+    <p class="hero-sub">// Data Engineer &amp; Analyst · SQL · Python · PySpark · Azure AI-102</p>
+    <p class="hero-desc">
+      4+ years delivering scalable data solutions in banking &amp; financial services for a major US bank.
+      Reduced data defect rates by 90% and improved processing efficiency by 20% through robust pipelines and rigorous data quality engineering.
+    </p>
+    <div class="hero-btns">
+      <a class="btn-primary" href="#experience">View my journey</a>
+      <a class="btn-outline" href="#contact">Let's connect</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">4+</span><span class="stat-label">Years Experience</span></div>
+      <div class="stat"><span class="stat-num">90%</span><span class="stat-label">Defect Rate Reduction</span></div>
+      <div class="stat"><span class="stat-num">100M+</span><span class="stat-label">Records Processed</span></div>
+      <div class="stat"><span class="stat-num">4</span><span class="stat-label">Azure Certifications</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<section id="summary">
+  <p class="section-eyebrow">Profile</p>
+  <h2 class="section-title">About me</h2>
+  <div class="summary-card">
+    Data Engineer and Analyst with 4+ years of experience delivering scalable data solutions in the banking and financial services domain for a major US bank client. Skilled in SQL (window functions, CTEs, complex joins), Python, PySpark, Spark, Hadoop, and Hive, with hands-on experience processing datasets of 100M+ records and reducing data defect rates by 90%. Comfortable translating complex data problems into actionable insights and communicating findings to cross-functional teams and business stakeholders. Microsoft Azure certified (AI-102, DP-900, AZ-900, AI-900), with a strong foundation in scalable data processing and a keen interest in advancing into analytics and data science.
+  </div>
+</section>
+
+<hr class="divider" />
+
+<section id="experience">
+  <p class="section-eyebrow">Career Timeline</p>
+  <h2 class="section-title">Where I've worked</h2>
+  <p class="section-desc">My professional journey across data engineering and operations.</p>
+  <div class="timeline">
+
+    <div class="tl-item">
+      <p class="tl-date">JAN 2022 – PRESENT</p>
+      <div class="tl-card">
+        <p class="tl-role">Technical Analyst – Data Engineer</p>
+        <p class="tl-org">Infosys Limited · Major US Bank Client</p>
+        <ul class="tl-bullets">
+          <li>Built and maintained large-scale data processing pipelines using Python, PySpark, Spark, SQL, and Hadoop — achieving a 20% improvement in data processing efficiency and a 90% reduction in data defect rates.</li>
+          <li>Wrote complex SQL queries including window functions, CTEs, and multi-table joins to support data validation, reconciliation, and reporting for the bank's financial data pipelines.</li>
+          <li>Used Teradata SQL and Vertica SQL extensively for large-scale data extraction and transformation across datasets exceeding 100 million records per table.</li>
+          <li>Built and optimised SQL-based data quality tools and checks, ensuring downstream data reliability for business-critical reporting.</li>
+          <li>Supported and tested a SAS-based enterprise application, writing SAS scripts and macros to automate data validation, transformation, and quality checks across environments during deployment cycles.</li>
+          <li>Leveraged Autosys for advanced workload automation — enhancing visibility and control over complex job scheduling, improving operational efficiency by 20%.</li>
+          <li>Managed code versioning and collaboration through Bitbucket (Git), facilitating seamless version control, code reviews, and team development.</li>
+          <li>Solely managed all performance and unit testing and deployment tasks, overseeing transition from lower environments to production, ensuring smooth and error-free releases.</li>
+          <li>Collaborated with Product Owners, Scrum Masters, and Data Engineers in a Scaled Agile framework across Development, Testing, and Deployment phases.</li>
+          <li>Led a team to consistently achieve sprint objectives, conducting regular presentations to senior stakeholders.</li>
+        </ul>
+        <div class="tl-tags">
+          <span class="tl-tag">PySpark</span><span class="tl-tag">Spark</span><span class="tl-tag">Python</span>
+          <span class="tl-tag">SQL</span><span class="tl-tag">Hadoop</span><span class="tl-tag">Hive</span>
+          <span class="tl-tag">Teradata SQL</span><span class="tl-tag">Vertica SQL</span><span class="tl-tag">SAS</span>
+          <span class="tl-tag">Autosys</span><span class="tl-tag">Bitbucket / Git</span><span class="tl-tag">Scaled Agile</span>
+        </div>
+        <div style="margin-top:1rem;">
+          <span class="award-badge">🏆 Infosys Delivery Excellence Award 2024–25</span>
+          <span class="award-badge">🏆 Infosys Glory Award 2023–24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item prev-dot">
+      <p class="tl-date">MAY 2016 – OCT 2017</p>
+      <div class="tl-card">
+        <p class="tl-role">Process Associate</p>
+        <p class="tl-org">Genpact India PVT LTD</p>
+        <ul class="tl-bullets">
+          <li>Prepared and maintained daily operational reports for work allocation and process performance tracking across a team of 10+.</li>
+          <li>Streamlined business processes using AS/400 and Savvion, reducing manual effort and improving operational efficiency.</li>
+          <li>Trained 4–5 new joiners on organisational workflows and reporting systems, accelerating onboarding and team productivity.</li>
+        </ul>
+        <div class="tl-tags">
+          <span class="tl-tag">AS/400</span><span class="tl-tag">Savvion</span>
+          <span class="tl-tag">Reporting</span><span class="tl-tag">Process Operations</span>
+        </div>
+        <div style="margin-top:1rem;">
+          <span class="award-badge">🏆 Genpact Best Team Player Award 2016–17</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="Studies">
+  <p class="section-eyebrow">Study Timeline</p>
+  <h2 class="section-title">Where I've Studied</h2>
+  <p class="section-desc">My Student Journy from Commerce to Code to Cloud.</p>
+  <div class="timeline">
+  
+    <div class="tl-item edu-dot">
+      <p class="tl-date">2017 – 2020</p>
+      <div class="tl-card">
+        <p class="tl-role">Master of Computer Applications (MCA) · 71%</p>
+        <p class="tl-org">Aurora's PG College · Osmania University, Hyderabad</p>
+        <ul class="tl-bullets">
+          <li>Core coursework: Mathematics, Statistics, Data Structures, Algorithms, Database Management Systems, Operating Systems.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tl-item edu-dot">
+      <p class="tl-date">2013 – 2016</p>
+      <div class="tl-card">
+        <p class="tl-role">Bachelor of Commerce – Computers (B.Com) · 69%</p>
+        <p class="tl-org">Vignana Jyothi Institute of Arts &amp; Sciences · Osmania University, Hyderabad</p>
+        <ul class="tl-bullets">
+          <li>Core coursework: Business Mathematics &amp; Statistics, Financial Accounting, Information Technology, C &amp; C++ Programming.</li>
+        </ul>
+      </div>
+    </div>
+	
+	<div class="tl-item edu-dot">
+      <p class="tl-date">2011 – 2013</p>
+      <div class="tl-card">
+        <p class="tl-role">MEC – Mathematics, Economics & Commerce.  65%</p>
+        <p class="tl-org">Bhavan's Sri Aurobindo Junior College &amp; (Board of Intermediate Education, Hyderabad)</p>
+        <ul class="tl-bullets">
+          <li>Core coursework: Intermediate Course</li>
+        </ul>
+      </div>
+    </div>
+	
+	<div class="tl-item edu-dot">
+      <p class="tl-date">2010 – 2011</p>
+      <div class="tl-card">
+        <p class="tl-role">Secondary School Certificate (SSC). 60%  </p>
+        <p class="tl-org">G R Grammar School  &amp; (Board of Secondary Education, Hyderabad)</p>
+        <ul class="tl-bullets">
+          <li>Core coursework: Intermediate Course</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider" />
+
+<section id="skills">
+  <p class="section-eyebrow">Technical Stack</p>
+  <h2 class="section-title">Skills &amp; tools</h2>
+  <p class="section-desc">Core technologies across data engineering, cloud, analytics, and DevOps.</p>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <p class="skill-group-label">Big Data</p>
+      <div class="skill-chips">
+        <span class="skill-chip">Apache Spark</span><span class="skill-chip">PySpark</span>
+        <span class="skill-chip">Hadoop</span><span class="skill-chip">Hive / HQL</span><span class="skill-chip">HDFS</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <p class="skill-group-label">Databases &amp; SQL</p>
+      <div class="skill-chips">
+        <span class="skill-chip">SQL (4+ yrs)</span><span class="skill-chip">Teradata SQL (3+ yrs)</span>
+        <span class="skill-chip">Vertica SQL</span><span class="skill-chip">HiveQL</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <p class="skill-group-label">Languages</p>
+      <div class="skill-chips">
+        <span class="skill-chip">Python</span><span class="skill-chip">PySpark</span>
+        <span class="skill-chip">SAS</span><span class="skill-chip">Korn Shell Scripting</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <p class="skill-group-label">Cloud · Azure</p>
+      <div class="skill-chips">
+        <span class="skill-chip">Azure AI Engineer (AI-102)</span><span class="skill-chip">DP-900</span>
+        <span class="skill-chip">AZ-900</span><span class="skill-chip">AI-900</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <p class="skill-group-label">Analytics &amp; Viz</p>
+      <div class="skill-chips">
+        <span class="skill-chip">Tableau</span><span class="skill-chip">Advanced MS Excel</span><span class="skill-chip">SAS Analytics</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <p class="skill-group-label">Tools &amp; DevOps</p>
+      <div class="skill-chips">
+        <span class="skill-chip">Autosys</span><span class="skill-chip">Bitbucket / Git</span>
+        <span class="skill-chip">DataStage</span><span class="skill-chip">Jira</span><span class="skill-chip">Unix / Linux</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<section id="certifications">
+  <p class="section-eyebrow">Credentials</p>
+  <h2 class="section-title">Microsoft Azure certifications</h2>
+  <p class="section-desc">Click any card to verify the credential on Microsoft Learn.</p>
+  <div class="certs-row">
+    <a class="cert-card" href="https://learn.microsoft.com/api/credentials/share/en-in/KisherSagarGautam-0143/13C594A200F8609B?sharingId=9446BD13B6244B42" target="_blank" rel="noopener">
+      <div class="cert-badge">AI<br>102</div>
+      <div><p class="cert-name">Azure AI Engineer Associate</p><p class="cert-issuer">Microsoft Certified · AI-102</p><p class="cert-verify">Verify ↗</p></div>
+    </a>
+    <a class="cert-card" href="https://learn.microsoft.com/api/credentials/share/en-us/KisherSagarGautam-0143/D0DF2A2FBB31BC07?sharingId=9446BD13B6244B42" target="_blank" rel="noopener">
+      <div class="cert-badge">DP<br>900</div>
+      <div><p class="cert-name">Azure Data Fundamentals</p><p class="cert-issuer">Microsoft Certified · DP-900</p><p class="cert-verify">Verify ↗</p></div>
+    </a>
+    <a class="cert-card" href="https://learn.microsoft.com/api/credentials/share/en-us/KisherSagarGautam-0143/3540AC5BB114B782?sharingId=9446BD13B6244B42" target="_blank" rel="noopener">
+      <div class="cert-badge">AZ<br>900</div>
+      <div><p class="cert-name">Azure Fundamentals</p><p class="cert-issuer">Microsoft Certified · AZ-900</p><p class="cert-verify">Verify ↗</p></div>
+    </a>
+    <a class="cert-card" href="https://learn.microsoft.com/api/credentials/share/en-us/KisherSagarGautam-0143/CC5B6F3949488986?sharingId=9446BD13B6244B42" target="_blank" rel="noopener">
+      <div class="cert-badge">AI<br>900</div>
+      <div><p class="cert-name">Azure AI Fundamentals</p><p class="cert-issuer">Microsoft Certified · AI-900</p><p class="cert-verify">Verify ↗</p></div>
+    </a>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<section id="contact">
+  <p class="section-eyebrow">Get in touch</p>
+  <h2 class="section-title">Let's connect</h2>
+  <p class="section-desc">Open to Data Engineer and Data Analyst roles — remote, hybrid, or Hyderabad-based.</p>
+  <div class="contact-links">
+    <a class="contact-link" href="mailto:kgautham1995@gmail.com">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      kgautham1995@gmail.com
+    </a>
+    <a class="contact-link" href="tel:+919966338830">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .92h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+      +91 99663 38830
+    </a>
+    <a class="contact-link" href="https://www.youtube.com/pwgindia" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+      YouTube · pwgindia
+    </a>
+  </div>
+</section>
+
+<footer>
+  Built with HTML · Hosted on GitHub Pages · © 2026 Kisher Sagar Gautam
+</footer>
+
+<script>
+  const bar = document.getElementById('progress-bar');
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+    bar.style.width = Math.min(pct, 100) + '%';
+  }, { passive: true });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        setTimeout(() => el.classList.add('visible'), parseInt(el.dataset.delay || 0));
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.tl-item').forEach((el, i) => { el.dataset.delay = i * 120; observer.observe(el); });
+  document.querySelectorAll('.skill-group').forEach((el, i) => { el.dataset.delay = i * 60; observer.observe(el); });
+  document.querySelectorAll('.cert-card').forEach((el, i) => { el.dataset.delay = i * 80; observer.observe(el); });
+  document.querySelectorAll('.summary-card').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
